@@ -1,0 +1,11 @@
+##################
+从http://tomcat.apche.org下载Tomcat9.0最新版本，配置好Tomcat环境变量后，运行tomcat9w.exe启动服务,系统一直提示指定的服务未安装unable to open the service 'tomcat9'
+
+有说从命令行提示符窗口   输入startup.bat   不行
+
+最终的解决方案：
+
+win+R打开输入命令提示符窗口，先cd..退回，后进入Tomcat的安装目录下，再进入到bin目录，输入：services.bat  install，出现下面图片上信息即表示安装成功
+
+有说直接进入tomcat安装的bin目录下点击services.bat，经测验，并没有什么用
+#############################
