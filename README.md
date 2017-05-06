@@ -47,4 +47,8 @@
 ---
 `intitle:word`
 
+### find the cache data on the web
+---
+`cache:hdu.edu.cn`
+
 
