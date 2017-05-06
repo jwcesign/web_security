@@ -51,4 +51,19 @@
 ---
 `cache:hdu.edu.cn`
 
+### find the basic information of somwthing
+---
+`info:keyword`
+
+### search the url contains the key word
+---
+`inurl:keyword`
+
+### get all the url of one website
+---
+`site:url`
+
+### find the page that has some connections with the url you give
+---
+`related:url`
 
