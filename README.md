@@ -39,3 +39,12 @@
 ---
 `define:word`
 
+### find the words you want in one webpage
+---
+`intext:word1 word2 word3`
+
+### find the words you want in the title of one page (<title>hello</title>:like this)
+---
+`intitle:word`
+
+
