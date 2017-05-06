@@ -1,3 +1,7 @@
 # web_security
-the learning notes of web security
-waiting to be finished
+
+##  the skill of how to google
+
+###  accurate search
+---
+`“CESIGN”`
