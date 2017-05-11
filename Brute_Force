@@ -1,2 +1,7 @@
 学习地址
 http://www.freebuf.com/articles/web/116437.html
+
+
+###Notice
+allow_url_include //系统默认关闭，可以远程文件包含
+allow_url_fopen //本地文件包含，查看与执行服务器文件
