@@ -1,0 +1,19 @@
+###########DVWA演练############
+###########学习地址############
+http://blog.sina.com.cn/s/blog_5c92dd1f0102vjfg.html
+
+
+1.测试语句
+2.猜测语句
+3.分析字段数 (order by)
+3.union构造语句（字段数必须一样)
+
+
+
+
+####注意
+###如sql语句: select user,passwd from table where user='get'
+1.select * from database.table where sth=sth;
+2.select database(),user()  //返回数据库和用户
+3.select * from table where user='1'#'  //#代表注释
+4.1' order by 1(or 2 or 3)  //求字段数，对接下来的破解做准备
