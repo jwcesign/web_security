@@ -70,3 +70,9 @@
 ### ? the way to use
 ---
 `like a letter you don't know  eg:"I l?ve"`
+
+
+##  实战篇
+---
+`加密方法 base64,rot13`
+`工具 chrome插件：http-header修改：modify headers`
