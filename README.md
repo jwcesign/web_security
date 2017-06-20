@@ -82,4 +82,4 @@
 
 ---
 ### PHP伪协议
-![学习地址](http://www.lorexxar.cn/2016/09/14/php-wei/)
+[学习地址](http://www.lorexxar.cn/2016/09/14/php-wei/)
