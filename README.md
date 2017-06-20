@@ -79,3 +79,7 @@
 `工具 chrome插件：http-header修改：modify headers`
 <hr/>
 `验证码常有三种错误：（1）一个验证码可重复用，不过期；（2）验证码只能用一次，但后台清空后可以构造为空；`
+
+---
+### PHP伪协议
+![学习地址](http://www.lorexxar.cn/2016/09/14/php-wei/)
