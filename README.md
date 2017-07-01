@@ -94,3 +94,6 @@
 
 ### xss各种漏洞
 [学习地址(freebuf)](http://www.freebuf.com/articles/web/123779.html)
+
+### shodan的使用
+[学习地址](https://cli.shodan.io/)
