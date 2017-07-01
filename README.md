@@ -87,3 +87,6 @@
 ### 常识
 使用str_replace函数是极其不安全的，因为可以使用双写绕过替换规则。
 例如page=hthttp://tp://192.168.5.12/phpinfo.txt时，str_replace函数会将http://删除，于是page=http://192.168.5.12/phpinfo.txt，成功执行远程命令。
+
+### sql盲注
+[学习地址](http://www.freebuf.com/articles/web/120985.html)
