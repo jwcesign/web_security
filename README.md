@@ -90,3 +90,4 @@
 
 ### sql盲注
 [学习地址](http://www.freebuf.com/articles/web/120985.html)
+`防注可以用PDO技术 [学习地址](http://www.jb51.net/article/56612.htm)`
