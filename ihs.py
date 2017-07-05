@@ -8,9 +8,9 @@ if len(sys.argv) < 2:
 	print '[*] Help: scripy.py dominant/ip ...'
 else:
 	payload = {'q':str(sys.argv[1])}
-	headers = {'host':'reverseip.domaintools.com','connection':'keep-alive','cache-control':'max-age=0','user-agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.81 Safari/537.36'}
+	header = {'host':'reverseip.domaintools.com','connection':'keep-alive','cache-control':'max-age=0','user-agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.81 Safari/537.36'}
 
-	res = requests.get("http://reverseip.domaintools.com/search/",params=payload,headers=headers)
+	res = requests.get("http://reverseip.domaintools.com/search/",params=payload,headers=header)
 	code = BeautifulSoup(res.text,"html.parser")
 	print ' '*24+'RESULT'
 	print '-'*50
