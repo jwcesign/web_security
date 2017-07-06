@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+#This script can help you do encrypt some string
 import sys
 import hashlib
 
