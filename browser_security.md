@@ -6,12 +6,11 @@
 >>  platform：给出游览器的操作系统或硬件类型
 >>  systemLanguage：给出操作系统的缺省语言，只读属性
 >>  userAgent：给出游览器在HTTP请求中使用的值
----
-`<script type="text/javascript"><br/>
-	alert(navigator.appName);<br/>
-	alert(navigator.appCodeName);<br/>
-	alert(navigator.cookieEnabled);<br/>
-	alert(navigator.platform)
-	alert(navigator.systemLanguage);<br/>;<br/>
-	alert(navigator.userAgent);<br/>
-</script>`
+		`<script type="text/javascript"><br/>
+			alert(navigator.appName);<br/>
+			alert(navigator.appCodeName);<br/>
+			alert(navigator.cookieEnabled);<br/>
+			alert(navigator.platform)
+			alert(navigator.systemLanguage);<br/>;<br/>
+			alert(navigator.userAgent);<br/>
+		</script>`
