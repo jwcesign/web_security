@@ -8,3 +8,6 @@
 * userAgent：给出游览器在HTTP请求中使用的值
 * IE:alert(navigator.appName);
 
+### document对象
+* cookie:获取cookie，ie:alert(document.cookie)
+
