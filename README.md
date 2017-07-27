@@ -39,6 +39,11 @@
 ---
 `define:word`
 
+### data协议
+---
+* 如果后台会过滤相应的字符并且没有转换（urldecode），可以用urlencode绕过
+* []
+
 ### find the words you want in one webpage
 ---
 `intext:word1 word2 word3`
@@ -97,3 +102,6 @@
 
 ### shodan的使用
 [学习地址](https://cli.shodan.io/)
+### data协议
+* 可以通过urlencode然过一定的过滤
+![](http://img.blog.csdn.net/20161027135341809) 
