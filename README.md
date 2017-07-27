@@ -103,5 +103,5 @@
 ### shodan的使用
 [学习地址](https://cli.shodan.io/)
 ### data协议
-* 可以通过urlencode然过一定的过滤
+* 可以通过urlencode然过一定的过滤，http:/asd.asd/?^%5f^=data:,hello
 ![](http://img.blog.csdn.net/20161027135341809) 
