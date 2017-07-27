@@ -105,3 +105,5 @@
 ### data协议
 * 可以通过urlencode然过一定的过滤，http:/asd.asd/?^%5f^=data:,hello
 ![](http://img.blog.csdn.net/20161027135341809) 
+### 宽字符注入
+[学习地址(freebuf)](http://blog.csdn.net/hw_henry2008/article/details/6736017)
