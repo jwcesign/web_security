@@ -59,7 +59,7 @@ document.body.appendChild(img);
 	* 使用`<base>`标签：定义页面上所使用“相对路径”的hosting地址，作用与后面的所有标签
 	~~~html
     <base href="http://127.0.0.1">
-    <img src="a.png"> 
+    <img src="a.png">
     <!--src="http://127.0.0.1/a.png"-->
     ~~~
 	* window.name的妙用
@@ -140,3 +140,8 @@ $stmt->execute();
 * 防御最好用白名单形式。（判断文件名后缀和检查文件头）
 * 文件截断：`%00(修改POST数据,对路径而言)`
 * 服务器解析漏洞
+
+## 认证与会话管理
+* 认证的目的是为了认出用户是谁，授权的目的是为了决定用户能够做什么。
+* 加密密码：md5(passwd),md5(passwd+salt)
+* Session Fixation攻击：登录前后Session未更新
