@@ -145,3 +145,113 @@ $stmt->execute();
 * 认证的目的是为了认出用户是谁，授权的目的是为了决定用户能够做什么。
 * 加密密码：md5(passwd),md5(passwd+salt)
 * Session Fixation攻击：登录前后Session未更新
+* 单点登录：只需要认证一次就可以使用所有系统（多因素认证）。
+
+## 访问控制
+* 用户--->角色-->权限
+* 越权访问（如http://.../?id=1,通过修改id访问其他用户）
+* 垂直权限与水平权限
+* OAuth
+## Web框架安全
+* MVC框架：在正确的地方做正确的事。
+
+## 拒绝服务攻击
+* DDOS分类：SYN flood, UDP flood, ICMP flood.(资源过载)
+* DDOS有网络层的和应用层的，网络层是利用TCP设计漏洞，应用层是利用请求耗费资源的请求（如数据库写入）
+* Slowloris, HTTP POST DOS, Server Limit DOS,RsDOS(正则表达式引发的DOS,/^(a+)+$/,如果输入aaaaaaaaaaaaaax)
+
+## 本地文件包含的利用技巧
+1. 包含用户上传的文件
+2. 包含data:// 或 php://input等伪协议
+3. 包含日志文件
+4. 包含上传的临时文件
+5. 包含其他文件
+
+## php伪协议详解
+### 支持类型
+* file://---访问本地
+* http://---访问HTTP(s)网址
+* ftp://---访问FTP(s) URLs
+* php://---访问各个输入/输出流(I/O streams)
+* zlib://---压缩流
+* data://---数据
+* glob://---查找匹配的文件路径模式
+* phar://---PHP归档
+* ssh2://---Secure Shell 2
+* rar://---RAR
+* ogg://---音频流
+* expect://---处理交互式的流
+
+### php://
+* 包含: php://stdin, php://stdout, php://stderr
+* php://stdin
+~~~php
+<?php
+    while($line = fopen('php://stdin','r'))
+    {//open our file pointer to read from stdin
+        echo $line."\n";
+        echo fgets($line);//读取
+    }
+?>
+~~~
+![stdin](http://img.blog.csdn.net/20170409140559729?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvTmk5aHRNYXIz/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+* php://stdout
+~~~php
+<?php
+    $fd = fopen('php://stdout', 'w');
+    if ($fd) {
+        echo $fd."\n";
+        fwrite($fd, "这是一个测试");
+        fwrite($fd, "\n");
+        fclose($fd);
+    }
+?>
+~~~
+![img](http://img.blog.csdn.net/20170409141123076?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvTmk5aHRNYXIz/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+
+* php://input
+~~~php
+<?php
+$user = $_GET["user"];
+$file = $_GET["file"];
+$pass = $_GET["pass"];
+
+if(isset($user)&&(file_get_contents($user,'r')==="the user is admin")){
+    echo "hello admin!<br>";
+    //include($file); //class.php
+}else{
+    echo "you are not admin ! ";
+}
+?>
+~~~
+![img](http://img.blog.csdn.net/20170409141221973?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvTmk5aHRNYXIz/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+
+* php://output
+~~~php
+<?php
+    $out=fopen("php://stdout", 'w');  
+    echo $out."\n";
+    fwrite($out , "this is a test");
+    fclose($out);
+?>
+~~~
+![img](http://img.blog.csdn.net/20170409141401718?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvTmk5aHRNYXIz/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+
+### php://filter: 与include文件利用
+~~~php
+<?php
+$user = $_GET["user"];
+$file = $_GET["file"];
+$pass = $_GET["pass"];
+
+if(isset($user)&&(file_get_contents($user,'r')==="the user is admin")){
+    echo "hello admin!<br>";
+    include($file); //class.php
+}else{
+    echo "you are not admin ! ";
+}
+?>
+//语法：var=php://filter/read=filter_type/resource=file
+//其他过滤器:string.toupper,string.tolower,string.strip_tags,convert.base64-encode,convert.base64-decode.
+~~~
+![img](http://img.blog.csdn.net/20170409141615103?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvTmk5aHRNYXIz/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
