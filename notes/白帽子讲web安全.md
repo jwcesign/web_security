@@ -255,3 +255,46 @@ if(isset($user)&&(file_get_contents($user,'r')==="the user is admin")){
 //其他过滤器:string.toupper,string.tolower,string.strip_tags,convert.base64-encode,convert.base64-decode.
 ~~~
 ![img](http://img.blog.csdn.net/20170409141615103?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvTmk5aHRNYXIz/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+
+## 变量覆盖漏洞
+* register_globals功能: 默认关闭
+* extract变量覆盖: 将数组解析为key，value变量
+~~~php
+<?php
+//curl http://.../a.php?auth=1
+$auth = '0';
+extract($_GET);
+
+if ($auth == 1)
+{
+	echo 'private';
+}else
+{
+	echo "public";
+}
+?>
+~~~
+* import_request_variables: 将GET,POST,Cookie中的变量导入到全局
+~~~php
+<?php
+$auth = 0;
+import_request_variables('G'); //get
+if ($auth == 1){
+  echo "private";
+}else {
+  echo "public";
+}
+?>
+~~~
+* parse_str():用于解析URL的query string
+~~~php
+<?php
+//?var=new
+$var = 'init';
+parse_str($_SERVER['QUERY_STRING']);
+print $var;
+?>
+~~~
+* unserialize():序列化导致的代码执行
+
+### END
